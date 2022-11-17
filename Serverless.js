@@ -12,3 +12,39 @@ exports.handler = async function (event) {
     const secondsInEpoch = Math.round(Date.now() / 1000);
     const expirationTime = secondsInEpoch + seconds;
     const currentTime = Math.round(Date.now() / 1000);
+
+    // initializing the table for dynamodb
+    var table = {
+        TableName : "csye-6225",
+        Item:{
+          "username" : email,
+          "token" : token,
+          "TimeToExist" :expirationTime
+        }
+      }
+      console.log("new item added to the table");
+
+      docClient.put(table, function(err, data) {
+        if (err) {
+            console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+        } else {
+            console.log("Added:", JSON.stringify(data, null, 2));
+        }
+    });
+    console.log(email + " " +token + "  Parameters set for the table");
+}
+const mailbody = `
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+      <p>Hello, ${email}</p>
+      <p>Please verify your email</br>
+      <b>Link will be valid only for 2-5 minutes</b></br>
+      Find your link below:</p>
+      <p><a href=https://demo.sowri.me/v1/client/verifyUserEmail?token=${token}&email=${email} >
+        https://demo.sowri.me/v1/client/verifyUserEmail?token=${token}&email=${email} </a> </p>
+        </body></html>
+    </body>
+</html>`;

@@ -32,7 +32,7 @@ exports.handler = async function (event) {
         }
     });
     console.log(email + " " +token + "  Parameters set for the table");
-}
+
 const mailbody = `
 <!DOCTYPE html>
 <html>
@@ -40,11 +40,33 @@ const mailbody = `
     </head>
     <body>
       <p>Hello, ${email}</p>
-      <p>Please verify your email</br>
-      <b>Link will be valid only for 2-5 minutes</b></br>
+      <p>Please verify your emailId</br>
+      <b>Link is going to be valid for only 2-5 minutes</b></br>
       Find your link below:</p>
       <p><a href=https://demo.sowri.me/v1/client/verifyUserEmail?token=${token}&email=${email} >
         https://demo.sowri.me/v1/client/verifyUserEmail?token=${token}&email=${email} </a> </p>
         </body></html>
     </body>
 </html>`;
+
+var params = {
+    Destination: {
+      ToAddresses: [email],
+    },
+    Message: {
+      Body: {
+        Html: {
+          Charset: "UTF-8",
+          Data: mailbody,
+        },
+      }, 
+      Subject: {
+          Charset: "UTF-8",
+          Data: "Email Verification",
+        },
+      },
+      Source: "sender@demo.sowri.me",
+    };
+    console.log("email has been sent");
+    return ses.sendEmail(params).promise()
+};  

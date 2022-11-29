@@ -26,7 +26,7 @@ jobs:
         run: |
              pwd
              ls -al
-             zip -r index.zip ./
+             zip -r serverless.zip ./
              echo "after zipping index folder"
              ls -al
       - name: Configuring AWS Credentials
@@ -37,7 +37,7 @@ jobs:
           aws-region: us-east-1
       - name: Copying artifact to S3
         run: |
-           aws s3 cp ./index.zip s3://deploy.a8/
+           aws s3 cp ./serverless.zip s3://deploy.a8/
       - name: Lambda Update
         run: |
-          aws lambda update-function-code --function-name emailVerify --s3-bucket deploy.a8 --s3-key index.zip
+          aws lambda update-function-code --function-name emailVerify --s3-bucket deploy.a8 --s3-key serverless.zip

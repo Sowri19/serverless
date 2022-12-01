@@ -4,11 +4,11 @@ name: Building and Deploying Lambda function
 # Controls when the workflow will run
 on:
   push:
-    branches: [main]
+    branches: [Assignment-8]
   # pull_request:
   #   branches: [main]
 
-  # This allows us to run this workflow manually from the Actions tab
+  # Allows you to run this workflow manually from the Actions tabb
   workflow_dispatch:
 
 jobs:
@@ -18,7 +18,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [16.x]
     steps:
       - uses: actions/checkout@v2
 
@@ -27,17 +27,17 @@ jobs:
              pwd
              ls -al
              zip -r serverless.zip ./
-             echo "after zipping Serverless folder"
+             echo "after zipping index folder"
              ls -al
       - name: Configuring AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}          
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: "us-east-1"
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
       - name: Copying artifact to S3
         run: |
-           aws s3 cp ./serverless.zip s3://deploy.serverless.a9/
+           aws s3 cp ./serverless.zip s3://deploy.a8/
       - name: Lambda Update
         run: |
-          aws lambda update-function-code --function-name emailVerify --s3-bucket deploy.serverless.a9 --s3-key serverless.zip
+          aws lambda update-function-code --function-name emailVerify --s3-bucket deploy.a8 --s3-key serverless.zip

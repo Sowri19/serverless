@@ -40,8 +40,8 @@ const mailbody = `
       <p>Please verify your email</br>
       <b>Link will be valid only for 5 minutes!!</b></br>
       Find your link below:</p>
-      <p><a href=http://sowri.me/v1/verifyUserEmail?token=${token}&email=${email} >
-        http://sowri.me/v1/verifyUserEmail?token=${token}&email=${email} </a> </p>
+      <p><a href=https://sowri.me/v1/verifyUserEmail?token=${token}&email=${email} >
+        https://sowri.me/v1/verifyUserEmail?token=${token}&email=${email} </a> </p>
         </body></html>
     </body>
 </html>`;

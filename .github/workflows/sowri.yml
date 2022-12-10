@@ -3,8 +3,8 @@ name: Building and Deploying Lambda function
 
 # Controls when the workflow will run
 on:
-  push:
-    branches: [Assignment-8]
+  pull_request:
+    branches: [main]
   # pull_request:
   #   branches: [main]
 
